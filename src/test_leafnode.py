@@ -23,6 +23,9 @@ class TestLeafNode(unittest.TestCase):
         node2 = LeafNode("tag", "value")
         self.assertEqual(node, node2)
 
+        node = LeafNode(None, "Hello, world!")
+        self.assertEqual(node.to_html(), "Hello, world!")
+
     def test_not_eq(self):
         node = LeafNode("tag1", "value")
         node2 = LeafNode("tag2", "value")

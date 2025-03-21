@@ -1,8 +1,9 @@
 from htmlnode import HTMLNode
+from typing import Dict
 
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag, value, props=None):
+    def __init__(self, tag: str, value: str, props: Dict[str, str] = None):
         super().__init__(tag, value, None, props)
 
     def to_html(self):
