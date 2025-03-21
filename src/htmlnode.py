@@ -13,6 +13,8 @@ class HTMLNode:
 
     def props_to_html(self):
         output: str = ""
+        if self.props == None:
+            return output
         for i in self.props:
             output += f" {i}=\"{self.props[i]}\""
 

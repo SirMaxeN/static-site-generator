@@ -132,6 +132,10 @@ class TestHtmlNode(unittest.TestCase):
         node2 = HTMLNode("tag", "value", [child1], {"href": "html"})
         self.assertEqual(node.__repr__(), node2.__repr__(),)
 
+    def test_to_html(self):
+        self.assertRaises(NotImplementedError, lambda: HTMLNode().to_html())
+           
+
 
 if __name__ == "__main__":
     unittest.main()
