@@ -2,7 +2,7 @@ from textnode import TextNode, TextType
 from htmlnode import HTMLNode
 from parentnode import ParentNode
 from leafnode import LeafNode
-from utils import text_node_to_html_node
+from utils import extract_markdown_images, extract_markdown_links, split_nodes_delimiter, text_node_to_html_node
 
 
 def main():
@@ -49,6 +49,19 @@ def main():
     print(tn)
     print(ln)
     print(ln.to_html())
+
+    tn = TextNode("This is text with a `code block` word", TextType.TEXT)
+    new_nodes = split_nodes_delimiter([tn], "`", TextType.CODE)
+    print()
+    print(new_nodes)
+
+    text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+    print()
+    print(extract_markdown_images(text))
+
+    text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+    print()
+    print(extract_markdown_links(text))
 
 
 if __name__ == "__main__":
