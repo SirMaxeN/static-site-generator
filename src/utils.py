@@ -27,9 +27,17 @@ def text_node_to_html_node(text_node: 'TextNode'):
                 f"Missing or incorrect text_node type: {text_node.text_type.value}")
 
 
+def extract_markdown_images(text: str) -> List[Tuple[str, str]]:
+    return re.findall(r"\!\[(.*?)\]\((.*?)\)", text)
+
+
+def extract_markdown_links(text: str) -> List[Tuple[str, str]]:
+    return re.findall(r"\[(.*?)\]\((.*?)\)", text)
+
+
 def split_nodes_util(text: str, delimiter: str, text_type: TextType, matches: List[Tuple[str, str]] = []) -> List['TextNode']:
     output = []
-    
+
     for match in matches:
         if text_type == TextType.IMAGE:
             text = text.replace(
@@ -37,11 +45,6 @@ def split_nodes_util(text: str, delimiter: str, text_type: TextType, matches: Li
         elif text_type == TextType.LINK:
             text = text.replace(
                 f"[{match[0]}]({match[1]})", f"{delimiter}_{delimiter}")
-
-    if delimiter not in text:
-        raise ValueError(
-            f"Delimiter: {delimiter} missing in text: {text}"
-        )
 
     splited = text.split(delimiter)
 
@@ -110,10 +113,15 @@ def split_nodes_link(old_nodes: List['TextNode']) -> List['TextNode']:
     return output
 
 
+def text_to_textnodes(text: str) -> List['TextNode']:
+    options = [("**", TextType.BOLD), ("`", TextType.CODE),
+               ("_", TextType.ITALIC)
+               ]
+    output: List['TextNode'] = [TextNode(text, TextType.TEXT)]
+    for option in options:
+        output = split_nodes_delimiter(output, option[0], option[1])
 
-def extract_markdown_images(text: str) -> List[Tuple[str, str]]:
-    return re.findall(r"\!\[(.*?)\]\((.*?)\)", text)
+    output = (split_nodes_image(output))
+    output = (split_nodes_link(output))
 
-
-def extract_markdown_links(text: str) -> List[Tuple[str, str]]:
-    return re.findall(r"\[(.*?)\]\((.*?)\)", text)
+    return output
