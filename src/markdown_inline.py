@@ -1,9 +1,7 @@
 import re
 from typing import List, Tuple
-from htmlnode import HTMLNode
 from leafnode import LeafNode
 from textnode import TextNode, TextType
-
 
 def text_node_to_html_node(text_node: 'TextNode'):
     if not text_node:
@@ -115,8 +113,8 @@ def split_nodes_link(old_nodes: List['TextNode']) -> List['TextNode']:
 
 def text_to_textnodes(text: str) -> List['TextNode']:
     options = [("**", TextType.BOLD), ("`", TextType.CODE),
-               ("_", TextType.ITALIC)
-               ]
+            ("_", TextType.ITALIC)
+            ]
     output: List['TextNode'] = [TextNode(text, TextType.TEXT)]
     for option in options:
         output = split_nodes_delimiter(output, option[0], option[1])

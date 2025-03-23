@@ -2,7 +2,7 @@ from textnode import TextNode, TextType
 from htmlnode import HTMLNode
 from parentnode import ParentNode
 from leafnode import LeafNode
-from utils import extract_markdown_images, extract_markdown_links, split_nodes_delimiter, text_node_to_html_node
+from markdown_inline import extract_markdown_images, extract_markdown_links, split_nodes_delimiter, text_node_to_html_node
 
 
 def main():
